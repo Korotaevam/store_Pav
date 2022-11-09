@@ -4,11 +4,19 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    return render(request, 'products/index.html')
+    context = {
+        'title': 'Store',
+        'header': 'Store',
+    }
+    return render(request, 'products/index.html', context)
 
 
 def products(request):
-    return render(request, 'products/products.html')
+    context = {
+        'title': 'Store - Catalog',
+        'header': 'Catalog',
+    }
+    return render(request, 'products/products.html', context)
 
 
 def test_context(request):
