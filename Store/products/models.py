@@ -1,7 +1,6 @@
 from django.db import models
+from users.models import *
 
-
-# Create your models here.
 
 class ProductCategory(models.Model):
     name = models.CharField(max_length=64, unique=True)
@@ -26,3 +25,18 @@ class Product(models.Model):
     def __str__(self):
         return f' {self.name} | {self.category.name} | {self.quantity} '
 
+
+class Basket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=0)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Корзина для {self.user.username} | Продукт {self.product.name}'
+
+    def sum(self):
+        return self.quantity * self.product.price
+
+    def total(self):
+        return self.quantity * self.product.price
